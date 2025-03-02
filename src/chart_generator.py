@@ -87,8 +87,10 @@ ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
+
+
 # col1, col2, col3 = st.columns([1, 1, 1])
-col1, col2, col3 = st.columns([1, 2, 2])
+col1, col2, col3 = st.columns([1, 0.5, 2])
 with col1:
     st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
 # with col2:   
