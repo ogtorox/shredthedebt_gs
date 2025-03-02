@@ -31,7 +31,7 @@ def fetch_image(url):
 
 
 def random_donation_amount():
-    return round(random.triangular(1.50, 500, 35.45), 2)
+    return round(random.triangular(1.50, 500, 15.45), 2)
 
 def random_name():
     return fake.name()
@@ -47,7 +47,7 @@ def generate_fake_data(num_entries=20):
     }
     return pd.DataFrame(data)
 
-df = generate_fake_data(20)
+df = generate_fake_data(150)
 
 # Aggregate donations by company
 company_donations = df.groupby("Company", as_index=False)["Donation"].sum()
@@ -87,12 +87,14 @@ ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
-col1, col2, col3 = st.columns([1, 1, 1])
+# col1, col2, col3 = st.columns([1, 1, 1])
+col1, col2, col3 = st.columns([1, 4, 2])
 with col1:
     st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
-with col2:    
+# with col2:   
+with col3: 
     st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
-with col3:
+# with col3:
     st.link_button("Donate Here", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
 
 with st.container():
