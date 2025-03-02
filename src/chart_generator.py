@@ -88,11 +88,11 @@ total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
 col1, col2, col3 = st.columns([1, 1, 1])
-with col1():
+with col1:
     st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
-with col2():    
+with col2:    
     st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
-with col3():
+with col3:
     st.link_button("Donate Here", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
 
 with st.container():
