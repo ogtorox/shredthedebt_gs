@@ -3,7 +3,7 @@ from PIL import Image
 
 # Config — adjust to fit the "look" you want
 TARGET_HEIGHT = 80  # Bars are usually not tall, so make these small
-TARGET_ASPECT_RATIO = 3  # e.g., 3:1 (3x wider than tall)
+TARGET_ASPECT_RATIO = 1  # e.g., 3:1 (3x wider than tall)
 
 # Paths
 input_folder = "../logos"    # Where your original images are
