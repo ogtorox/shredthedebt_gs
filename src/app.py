@@ -1,1 +1,1 @@
-streamlit run app.py
+streamlit run chart_generator.py
