@@ -6,14 +6,14 @@ import matplotlib.image as mpimg
 from faker import Faker
 import requests
 import io
+import matplotlib.ticker as mtick
 
 fake = Faker()
 
 # Companies and image paths (assuming you have these saved locally or hosted somewhere)
-companies = ["AHEAD", "McKinsey", "Deloitte", "Accenture", "KPMG", "SBG+", "Point B", "Assurety", "EY"]
+companies = ["AHEAD", "Deloitte", "Accenture", "KPMG", "SBG+", "Point B", "Assurety", "EY"]
 shapers = {
     "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/alexis_ahead.jpg",
-    # "McKinsey": "logos/mckinsey.png",
     "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/hannah_deloitte.jpg",
     "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/stephanie_accenture.jpg",
     "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/daniel_kpmg.jpg",
@@ -52,36 +52,41 @@ df = generate_fake_data(20)
 # Aggregate donations by company
 company_donations = df.groupby("Company", as_index=False)["Donation"].sum()
 
-
+# Plot with matplotlib
 fig, ax = plt.subplots(figsize=(10, 6))
 
-bars = ax.barh(company_donations["Company"], company_donations["Donation"], color="skyblue")
+ax.barh(company_donations["Company"], company_donations["Donation"], color="skyblue")
 ax.set_xlabel("Total Donations ($)")
-
-for i, row in company_donations.iterrows():
-    company = row["Company"]
-    donation = row["Donation"]
-
-    logo_url = shapers.get(company)
-    if logo_url:
-        img = fetch_image(logo_url)  # This loads a numpy array image
-
-        # Get bar height (dynamic based on matplotlib rendering)
-        bar_height = ax.patches[i].get_height()
-
-        # Calculate aspect ratio and scaled width to match bar height
-        aspect_ratio = img.shape[1] / img.shape[0]
-        width = bar_height * aspect_ratio
-
-        # Now fit the image into the bar height properly
-        ax.imshow(img, extent=[donation + 10, donation + 10 + width, i - bar_height/2, i + bar_height/2])
+ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 
 
-#total donation amount to eb displayed against goal
+# for i, row in enumerate(company_donations.itertuples()):
+#     company = row.Company
+#     donation = row.Donation
+
+#     logo_url = shapers.get(company)
+#     if logo_url:
+#         img = fetch_image(logo_url)
+
+#         # Get the actual bar height from matplotlib (this is critical)
+#         bar_height = ax.patches[i].get_height()
+
+#         # Placement logic (put image to the right of the bar)
+#         img_aspect = img.shape[1] / img.shape[0]  # Width / Height (should be 1 for 80x80)
+
+#         # Use bar height to control image size
+#         image_width = bar_height * img_aspect  # Should be same since 80x80 is square
+#         image_height = bar_height  # Fit vertically to the bar
+
+#         # Place image directly after the bar ends
+#         extent = [donation + 5, donation + 5 + image_width, i - bar_height/2, i + bar_height/2]
+
+#         ax.imshow(img, extent=extent, aspect='auto', zorder=3)
+
+#total donation amount to be displayed against goal
 total_donations = df["Donation"].sum()
-
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
 st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000")
 st.pyplot(fig)
-st.table(df)
+st.table(df.style.hide(axis="index"))
