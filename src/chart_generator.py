@@ -110,3 +110,7 @@ with col3:
     st.link_button("Chicago Global Shapers", "https://www.chicagoshapers.org/")
 with col4:
     st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
+
+with st.container():
+    st.pyplot(fig)
+    st.table(df.style.hide(axis="index"))
