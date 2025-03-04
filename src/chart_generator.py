@@ -85,20 +85,33 @@ ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
-# col1, col2, col3 = st.columns([1, 1, 1])
-tab1, tab2, tab3, tab4 = st.tabs(["Tracker", "Rules", st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/"), st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")])
-with tab1:
-    col1, col2, col3, col4 = st.columns([1,2,2,1])
-    with col1:
-        st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
-    # with col3:   
-    # # with col3: 
-    #     st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
-    # with col4:
-    #     st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
+# # col1, col2, col3 = st.columns([1, 1, 1])
+# tab1, tab2, tab3, tab4 = st.tabs(["Tracker", "Rules", st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/"), st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")])
+# with tab1:
+#     col1, col2, col3, col4 = st.columns([1,2,2,1])
+#     with col1:
+#         st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
+#     # with col3:   
+#     # # with col3: 
+#     #     st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
+#     # with col4:
+#     #     st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
 
-    with st.container():
-        st.pyplot(fig)
-        st.table(df.style.hide(axis="index"))
-with tab2:
-    st.markdown("These are the rules. Include the related associated initlas in your FIRST NAME, make sure you donation is not marked anonynmous, and your donation will be included. May the best secure bragging rights.")
+#     with st.container():
+#         st.pyplot(fig)
+#         st.table(df.style.hide(axis="index"))
+# with tab2:
+#     st.markdown("These are the rules. Include the related associated initlas in your FIRST NAME, make sure you donation is not marked anonynmous, and your donation will be included. May the best secure bragging rights.")
+
+col1, col2, col3, col4, col5 = st.columns(5)
+
+with col1:
+    st.page_link("#tracker", label="Tracker")  # Internal tab-like
+with col2:
+    st.page_link("#rules", label="Rules")  # Internal tab-like
+with col3:
+    st.link_button("Chicago Global Shapers", "https://www.chicagoshapers.org/")
+with col4:
+    st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
+with col5:
+    st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000")
