@@ -29,7 +29,6 @@ def fetch_image(url):
     response.raise_for_status()   
     return mpimg.imread(io.BytesIO(response.content), format='jpg')
 
-
 def random_donation_amount():
     return round(random.triangular(1.50, 500, 15.45), 2)
 
@@ -59,7 +58,6 @@ ax.barh(company_donations["Company"], company_donations["Donation"], color="skyb
 ax.set_xlabel("Total Donations ($)")
 ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 
-
 # for i, row in enumerate(company_donations.itertuples()):
 #     company = row.Company
 #     donation = row.Donation
@@ -87,18 +85,20 @@ ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
-
-
 # col1, col2, col3 = st.columns([1, 1, 1])
-col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
-with col1:
-    st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
-with col3:   
-# with col3: 
-    st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
-with col4:
-    st.link_button("Donate Here", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
+tab1, tab2, tab3, tab4 = st.tabs(["Tracker", "Rules", st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/"), st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#"])
+with tab1:
+    col1, col2, col3, col4 = st.columns([1,2,2,1])
+    with col1:
+        st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000") 
+    # with col3:   
+    # # with col3: 
+    #     st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/")
+    # with col4:
+    #     st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
 
-with st.container():
-    st.pyplot(fig)
-    st.table(df.style.hide(axis="index"))
+    with st.container():
+        st.pyplot(fig)
+        st.table(df.style.hide(axis="index"))
+with tab2:
+    st.markdown("These are the rules. Include the related associated initlas in your FIRST NAME, make sure you donation is not marked anonynmous, and your donation will be included. May the best secure bragging rights.")
