@@ -103,7 +103,7 @@ df["Donation"] = df["Donation"].map("${:,.2f}".format)
 # with tab2:
 #     st.markdown("These are the rules. Include the related associated initlas in your FIRST NAME, make sure you donation is not marked anonynmous, and your donation will be included. May the best secure bragging rights.")
 
-col1, col2, col3, col4 = st.columns()
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000")
 with col3:
