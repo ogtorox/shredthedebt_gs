@@ -86,7 +86,7 @@ total_donations = df["Donation"].sum()
 df["Donation"] = df["Donation"].map("${:,.2f}".format)
 
 # col1, col2, col3 = st.columns([1, 1, 1])
-tab1, tab2, tab3, tab4 = st.tabs(["Tracker", "Rules", st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/"), st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#"])
+tab1, tab2, tab3, tab4 = st.tabs(["Tracker", "Rules", st.link_button("Go to Chicago Global Shapers", "https://www.chicagoshapers.org/"), st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")])
 with tab1:
     col1, col2, col3, col4 = st.columns([1,2,2,1])
     with col1:
