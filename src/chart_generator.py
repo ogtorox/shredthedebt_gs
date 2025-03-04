@@ -29,8 +29,30 @@ def fetch_image(url):
     response.raise_for_status()   
     return mpimg.imread(io.BytesIO(response.content), format='jpg')
 
-def random_donation_amount():
-    return round(random.triangular(1.50, 500, 5.45), 2)
+import random
+
+# generate random donations, but never greater than the current campaign value
+def random_donation_amount(total_amount=2664.10, min_donation=1.50, max_donation=500):
+    donations = []
+    remaining = total_amount
+
+    while remaining > 0:
+        if remaining < min_donation:
+            donations[-1] += remaining  # Just top off the last donation if there's a tiny leftover
+            break
+
+        max_possible = min(max_donation, remaining)
+        donation = round(random.uniform(min_donation, max_possible), 2)
+        donations.append(donation)
+        remaining -= donation
+
+    # Ensure the final total is exactly 3000 (handling small floating point issues)
+    actual_total = sum(donations)
+    if actual_total != total_amount:
+        difference = round(total_amount - actual_total, 2)
+        donations[-1] += difference
+
+    return donations
 
 def random_name():
     return fake.name()
