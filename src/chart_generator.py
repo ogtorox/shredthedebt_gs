@@ -30,7 +30,7 @@ def fetch_image(url):
     return mpimg.imread(io.BytesIO(response.content), format='jpg')
 
 def random_donation_amount():
-    return round(random.triangular(1.50, 500, 15.45), 2)
+    return round(random.triangular(1.50, 500, 5.45), 2)
 
 def random_name():
     return fake.name()
