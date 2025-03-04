@@ -103,15 +103,10 @@ df["Donation"] = df["Donation"].map("${:,.2f}".format)
 # with tab2:
 #     st.markdown("These are the rules. Include the related associated initlas in your FIRST NAME, make sure you donation is not marked anonynmous, and your donation will be included. May the best secure bragging rights.")
 
-col1, col2, col3, col4, col5 = st.columns(5)
-
+col1, col2, col3, col4 = st.columns()
 with col1:
-    st.page_link("#tracker", label="Tracker")  # Internal tab-like
-with col2:
-    st.page_link("#rules", label="Rules")  # Internal tab-like
+    st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000")
 with col3:
     st.link_button("Chicago Global Shapers", "https://www.chicagoshapers.org/")
 with col4:
     st.link_button("DONATE HERE", "https://unduemedicaldebt.org/campaign/shred-the-debt-greater-chicago-region/#")
-with col5:
-    st.metric(label="Total Donations", value=f"${total_donations:,.2f}", delta=f"Goal: $15,000")
