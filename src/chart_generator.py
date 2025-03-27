@@ -79,7 +79,7 @@ def fetch_image(url):
 
 # Constants
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-SPREADSHEET_ID = '1pFZ9aIiOBYMG0HD8qL-WXxvSawBTmCTf'  # ← Replace this with your actual Sheet ID
+SPREADSHEET_ID = '17NMNvIdHVYiPEzlUKtftpNbqRInJE2sv7P2P5fUNZgk'  # ← Replace this with your actual Sheet ID
 RANGE_NAME = 'Data!A1:D1000'  # ← Adjust if your sheet/tab has a different name or range
 
 @st.cache_resource
