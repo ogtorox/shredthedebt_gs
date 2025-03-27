@@ -38,7 +38,7 @@ RANGE_NAME = 'Data!A1:D1000'  # ← Adjust if your sheet/tab has a different nam
 @st.cache_resource
 def get_gsheet_data():
     flow = InstalledAppFlow.from_client_secrets_file(
-        'credentials.json', SCOPES)
+        'service_account.json', SCOPES)
     creds = flow.run_local_server(port=0)
     service = build('sheets', 'v4', credentials=creds)
 
