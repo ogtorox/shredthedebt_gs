@@ -6,8 +6,7 @@ import matplotlib.image as mpimg
 import requests
 import io
 import matplotlib.ticker as mtick
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
 # Companies and image paths (assuming you have these saved locally or hosted somewhere)
@@ -37,11 +36,24 @@ RANGE_NAME = 'Data!A1:D1000'  # ← Adjust if your sheet/tab has a different nam
 
 @st.cache_resource
 def get_gsheet_data():
-    flow = InstalledAppFlow.from_client_secrets_file(
-        'service_account.json', SCOPES)
-    creds = flow.run_local_server(port=0)
-    service = build('sheets', 'v4', credentials=creds)
+    credentials_dict = {
+        "type": st.secrets["google"]["type"],
+        "project_id": st.secrets["google"]["project_id"],
+        "private_key_id": st.secrets["google"]["private_key_id"],
+        "private_key": st.secrets["google"]["private_key"],
+        "client_email": st.secrets["google"]["client_email"],
+        "client_id": st.secrets["google"]["client_id"],
+        "auth_uri": st.secrets["google"]["auth_uri"],
+        "token_uri": st.secrets["google"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["google"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["google"]["client_x509_cert_url"]
+    }
 
+    creds = service_account.Credentials.from_service_account_info(
+        credentials_dict, scopes=SCOPES
+    )
+
+    service = build('sheets', 'v4', credentials=creds)
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
     values = result.get('values', [])
@@ -54,16 +66,14 @@ def get_gsheet_data():
     data = values[1:]
     df = pd.DataFrame(data, columns=headers)
 
-    # Ensure Amount is numeric
-    df["Amount"] = (                                # --Step 1: Clean the Amount column
+    df["Amount"] = (
         df["Amount"]
-        .astype(str)  # make sure everything is a string
-        .str.replace(r"[^0-9.\-]", "", regex=True)  # remove $, commas, and other non-numeric chars
+        .astype(str)
+        .str.replace(r"[^0-9.\-]", "", regex=True)
     )
 
-    df["Amount"] = pd.to_numeric(df["Amount"], errors="coerce")  # --Step 2: Convert to float safely | non-convertible values become NaN
-
-    df["Amount"] = df["Amount"].fillna(0)     # --Optional: Drop or fill NaNs if needed
+    df["Amount"] = pd.to_numeric(df["Amount"], errors="coerce")
+    df["Amount"] = df["Amount"].fillna(0)
 
     return df
 
