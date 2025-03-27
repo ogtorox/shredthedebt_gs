@@ -1,0 +1,15 @@
+# Hide Google OAuth Credentials JSON
+secrets/Credentials.json
+
+# Python / Streamlit stuff
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.env.*
+.secrets/
+secrets/*.json
+.DS_Store
