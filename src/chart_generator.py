@@ -3,16 +3,12 @@ import pandas as pd
 import random
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from faker import Faker
 import requests
 import io
 import matplotlib.ticker as mtick
-
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-
-fake = Faker()
 
 # Companies and image paths (assuming you have these saved locally or hosted somewhere)
 #companies = ["AHEAD", "Deloitte", "Accenture", "KPMG", "SBG+", "Point B", "Assurety", "EY"]
@@ -28,58 +24,15 @@ shapers = {
     "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/mohit_ey.jpg"
 }
 
-# # Desired number of entries & cap
-# number_of_entries = 100
-# total_cap = 2664.10
-
 # Fetch images (unchanged)
 def fetch_image(url):
     response = requests.get(url)
     response.raise_for_status()
     return mpimg.imread(io.BytesIO(response.content), format='jpg')
 
-# # Random donation generator
-# def random_donation_amount(remaining_budget):
-#     max_possible = min(500, remaining_budget)
-#     return round(random.triangular(1.50, max_possible, 5.45), 2)
-
-# # Random helpers
-# def random_name():
-#     return fake.name()
-
-# def random_company():
-#     return random.choice(companies)
-
-# # Generate fake data respecting total cap
-# def generate_fake_data(num_entries=number_of_entries, total_cap=3000):
-#     data = []
-#     remaining_budget = total_cap
-
-#     for _ in range(num_entries):
-#         if remaining_budget < 1.50:
-#             break
-
-#         donation = random_donation_amount(remaining_budget)
-#         donation = min(donation, remaining_budget)
-
-#         data.append({
-#             "Name": random_name(),
-#             "Donation": donation,
-#             "Shaper/Company": random_company(),
-#         })
-
-#         remaining_budget -= donation
-#         if remaining_budget <= 0:
-#             break
-
-#     return pd.DataFrame(data)
-
-# # Create DataFrame
-# df = generate_fake_data(number_of_entries, total_cap)
-
 # Constants
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-SPREADSHEET_ID = 'd/1g3fjjdVelmp2idBj4ijUqzyx6ampCM-vK-fa7Ya97Fw'  # ← Replace this with your actual Sheet ID
+SPREADSHEET_ID = '1g3fjjdVelmp2idBj4ijUqzyx6ampCM-vK-fa7Ya97Fw'  # ← Replace this with your actual Sheet ID
 RANGE_NAME = 'Data!A1:D1000'  # ← Adjust if your sheet/tab has a different name or range
 
 @st.cache_resource
@@ -102,7 +55,15 @@ def get_gsheet_data():
     df = pd.DataFrame(data, columns=headers)
 
     # Ensure Amount is numeric
-    df["Amount"] = pd.to_numeric(df["Amount"], errors='coerce')
+    df["Amount"] = (                                # --Step 1: Clean the Amount column
+        df["Amount"]
+        .astype(str)  # make sure everything is a string
+        .str.replace(r"[^0-9.\-]", "", regex=True)  # remove $, commas, and other non-numeric chars
+    )
+
+    df["Amount"] = pd.to_numeric(df["Amount"], errors="coerce")  # --Step 2: Convert to float safely | non-convertible values become NaN
+
+    df["Amount"] = df["Amount"].fillna(0)     # --Optional: Drop or fill NaNs if needed
 
     return df
 
