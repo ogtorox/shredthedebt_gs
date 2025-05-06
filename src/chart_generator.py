@@ -9,15 +9,15 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # Define company-to-image mapping
 shapers = {
-    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/alexis_ahead.png",
-    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/hannah_deloitte.png",
-    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/stephanie_accenture.png",
-    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/daniel_kpmg.png",
-    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/macaila_sbg%2B.png",
-    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/frankie_pointb.png",
-    "Assurety": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shahaan_assurety.png",
-    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/mohit_ey.png"
+    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/alexis_ahead.png",
+    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/hannah_deloitte.png",
+    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/stephanie_accenture.png",
+    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/daniel_kpmg.png",
+    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/macaila_sbg%2B.png",
+    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/frankie_pointb.png",
+    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/resized_logos/mohit_ey.png"
 }
+
 
 # Fetch image from URL
 def fetch_image(url):
@@ -55,11 +55,11 @@ for bar, company in zip(bars, company_donations["Company"]):
     if image_url:
         try:
             img = fetch_image(image_url)
-            oi = OffsetImage(img, zoom=0.2)
+            oi = OffsetImage(img, zoom=0.10)  # 👈 adjust zoom here for all images
             ab = AnnotationBbox(
-                OffsetImage(img, zoom=0.35),              
-                (bar.get_width(), bar.get_y() + bar.get_height() / 2),  
-                xybox=(10, 0),                             
+                oi,
+                (bar.get_width() + 100, bar.get_y() + bar.get_height() / 2),
+                xybox=(10, 0),
                 xycoords='data',
                 boxcoords="offset points",
                 frameon=False
@@ -67,6 +67,7 @@ for bar, company in zip(bars, company_donations["Company"]):
             ax.add_artist(ab)
         except Exception as e:
             print(f"Error loading image for {company}: {e}")
+
 
 fig.patch.set_alpha(0.0)  # make the figure background transparent
 ax.patch.set_alpha(0.0)   # make the axes background transparent
