@@ -63,7 +63,7 @@ st.markdown(
 )
 
 # Load and clean data
-SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs9wnOCExP42cbnSKIMFGJshEtkXKNPKEMc9_e99JTk3acOlbFLB9bu5aEOmUjt2AMxeTPqid9w46Y/pub?output=csv"
+SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs9wnOCExP42cbnSKIMFGJshEtkXKNPKEMc9_e99JTk3acOlbFLB9bu5aEOmUjt2AMxeTPqid9w46Y/pubhtml"
 
 @st.cache_data
 def get_gsheet_data():
