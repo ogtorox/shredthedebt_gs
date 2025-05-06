@@ -7,6 +7,18 @@ import io
 import matplotlib.ticker as mtick
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
+# Define page color
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #f4f4f4;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Define company-to-image mapping
 shapers = {
     "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/alexis_ahead.png",
