@@ -9,21 +9,21 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # Define company-to-image mapping
 shapers = {
-    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/alexis_ahead.jpg",
-    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/hannah_deloitte.jpg",
-    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/stephanie_accenture.jpg",
-    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/daniel_kpmg.jpg",
-    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/macaila_sbg%2B.jpg",
-    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/frankie_pointb.jpg",
-    "Assurety": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shahaan_assurety.jpg",
-    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/mohit_ey.jpg"
+    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/alexis_ahead.png",
+    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/hannah_deloitte.png",
+    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/stephanie_accenture.png",
+    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/daniel_kpmg.png",
+    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/macaila_sbg%2B.png",
+    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/frankie_pointb.png",
+    "Assurety": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shahaan_assurety.png",
+    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/mohit_ey.png"
 }
 
 # Fetch image from URL
 def fetch_image(url):
     response = requests.get(url)
     response.raise_for_status()
-    return mpimg.imread(io.BytesIO(response.content), format='jpg')
+    return mpimg.imread(io.BytesIO(response.content), format='png')
 
 # Use published CSV link from Google Sheets
 SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs9wnOCExP42cbnSKIMFGJshEtkXKNPKEMc9_e99JTk3acOlbFLB9bu5aEOmUjt2AMxeTPqid9w46Y/pub?output=csv"
