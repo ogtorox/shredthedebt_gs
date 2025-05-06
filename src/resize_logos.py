@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-TARGET_SIZE = (250, 300)  # width x height in pixels
+TARGET_SIZE = (250, 444)  # width x height in pixels
 INPUT_FOLDER = "../resized_logos"  # original images
 OUTPUT_FOLDER = "../shredthedebt_gs/head_pngs"  # resized PNGs
 
