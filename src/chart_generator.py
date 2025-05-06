@@ -9,15 +9,24 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # Define company-to-image mapping
 shapers = {
-    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/alexis_ahead.png",
-    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/hannah_deloitte.png",
-    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/stephanie_accenture.png",
-    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/daniel_kpmg.png",
-    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/macaila_sbg%2B.png",
-    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/frankie_pointb.png",
-    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/mohit_ey.png"
+    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/alexis_ahead.png",
+    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/hannah_deloitte.png",
+    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/stephanie_accenture.png",
+    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/daniel_kpmg.png",
+    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/macaila_sbg%2B.png",
+    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/frankie_pointb.png",
+    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/shredthedebt_gs/head_pngs/mohit_ey.png"
 }
 
+colors = {
+    "AHEAD": "skyblue",
+    "Deloitte": "lightgreen",
+    "Accenture": "purple",
+    "KPMG": "blue",
+    "SBG+": "red",
+    "Point B": "royalblue",
+    "EY": "green"
+}
 
 # Fetch image from URL
 def fetch_image(url):
@@ -42,11 +51,15 @@ def get_gsheet_data():
 df = get_gsheet_data()
 company_donations = df.groupby("Company", as_index=False)["Amount"].sum()
 
+# Match color order to company order
+bar_colors = [colors.get(company, "gray") for company in company_donations["Company"]]
 
 # Plotting
 fig, ax = plt.subplots(figsize=(10, 6))
-bars = ax.barh(company_donations["Company"], company_donations["Amount"], color="skyblue")
-ax.set_xlabel("Total Donations ($)")
+bars = ax.barh(company_donations["Company"], company_donations["Amount"], color=bar_colors)
+ax.set_xlabel("Total Donations ($)")# Automatically adjust X limit based on image size
+bar_max = company_donations["Amount"].max()
+ax.set_xlim(0, bar_max + 1000)  # or bar_max * 1.25
 ax.xaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
 
 # Add images at the end of bars
@@ -55,11 +68,11 @@ for bar, company in zip(bars, company_donations["Company"]):
     if image_url:
         try:
             img = fetch_image(image_url)
-            oi = OffsetImage(img, zoom=0.10)  # 👈 adjust zoom here for all images
+            oi = OffsetImage(img, zoom=0.2)  # 👈 adjust zoom here for all images
             ab = AnnotationBbox(
                 oi,
-                (bar.get_width() + 100, bar.get_y() + bar.get_height() / 2),
-                xybox=(10, 0),
+                (bar.get_width() + 150, bar.get_y() + bar.get_height() / 2),
+                xybox=(-50, 0),
                 xycoords='data',
                 boxcoords="offset points",
                 frameon=False
