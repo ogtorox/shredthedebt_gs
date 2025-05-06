@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-TARGET_SIZE = (200, 200)  # width x height in pixels
+TARGET_SIZE = (250, 300)  # width x height in pixels
 INPUT_FOLDER = "../resized_logos"  # original images
 OUTPUT_FOLDER = "../shredthedebt_gs/head_pngs"  # resized PNGs
 
@@ -16,7 +16,7 @@ def resize_image(input_path, output_path):
 
 def batch_resize():
     for filename in os.listdir(INPUT_FOLDER):
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
+        if filename.lower().endswith(('.png')):
             input_path = os.path.join(INPUT_FOLDER, filename)
             output_filename = os.path.splitext(filename)[0] + ".png"
             output_path = os.path.join(OUTPUT_FOLDER, output_filename)
