@@ -67,3 +67,4 @@ def generate_chart(df):
     ax.patch.set_alpha(0.0)
     plt.tight_layout()
     return fig
+# hi
