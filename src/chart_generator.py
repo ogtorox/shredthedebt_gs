@@ -9,13 +9,13 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # Define company-to-image mapping
 shapers = {
-    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/alexis_ahead.png",
-    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/hannah_deloitte.png",
-    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/stephanie_accenture.png",
-    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/daniel_kpmg.png",
-    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/macaila_sbg%2B.png",
-    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/frankie_pointb.png",
-    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/main/head_pngs/mohit_ey.png"
+    "AHEAD": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/alexis_ahead.png",
+    "Deloitte": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/hannah_deloitte.png",
+    "Accenture": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/stephanie_accenture.png",
+    "KPMG": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/daniel_kpmg.png",
+    "SBG+": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/macaila_sbg%2B.png",
+    "Point B": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/frankie_pointb.png",
+    "EY": "https://raw.githubusercontent.com/ogtorox/shredthedebt_gs/head_pngs/mohit_ey.png"
 }
 
 
