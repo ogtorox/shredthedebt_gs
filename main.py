@@ -71,6 +71,10 @@ def get_gsheet_data():
     df["Amount"] = pd.to_numeric(df["Amount"], errors="coerce").fillna(0)
     return df
 
+# Refresh data on demand
+if st.button("🔄 Refresh Data"):
+    st.cache_data.clear()
+
 df = get_gsheet_data()
 
 # Show metrics
@@ -90,3 +94,6 @@ st.pyplot(fig)
 # Show raw data
 df["Amount"] = df["Amount"].map("${:,.2f}".format)
 st.dataframe(df, hide_index=True, width=800)
+
+# Render self-report form
+render_donation_form()
