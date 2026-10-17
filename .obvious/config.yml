@@ -1,0 +1,4 @@
+# Repo policy for obvious agents — ogtorox/shredthedebt_gs
+default_branch: main
+merge_method: squash  # squash, merge commit, and rebase are all enabled on GitHub; squash preferred to keep history clean
+delete_branch_on_merge: false
