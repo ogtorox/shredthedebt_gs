@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 from src.chart_generator import generate_chart
+from src.self_report import render_donation_form
 
 st.set_page_config(page_title="Shred the Debt", layout="wide")
 
